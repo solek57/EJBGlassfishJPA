@@ -1,6 +1,9 @@
 package com.devcolibri.entity;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,19 +22,17 @@ public class News {
     @Column(name = "message")
     private String message;
 
-   /*@NotNull
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "topic_id")
-    private Topic topic;*/
-   @Column(name = "topic id")
-    private long topic_id;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Topic topic;
 
     public News() {
     }
 
-    public News(String message, long topic_id){
+    public News(String message){
         this.message = message;
-        this.topic_id=topic_id;
 
     }
 
@@ -43,13 +44,13 @@ public class News {
         this.message = message;
     }
 
-   /* public Topic getTopic() {
+    public Topic getTopic() {
         return topic;
     }
 
     public void setTopic(Topic topic) {
         this.topic = topic;
-    }*/
+    }
 
     public long getId() {
         return id;

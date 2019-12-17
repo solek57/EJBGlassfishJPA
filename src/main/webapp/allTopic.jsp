@@ -2,21 +2,34 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Список топиков</title>
 </head>
 <body>
 
     <h3>Все топики:</h3>
     (<a href="addTopic">добавить</a>)
+    <div class="card-columns container mt-3">
+
     <ol>
         <c:forEach items="${topics}" var="topic">
-            <li>
-                ${topic.name}
-                    <a href="addTopic?edit=${topic.id}">редактировать</a> | <a href="delete?id=${topic.id}">удалить</a>
-                    | <a href="allNews?id_topic = ${topic.id}">Посмотреть новости  данного топика</a>
-            </li>
+            <div class="card my-3" style="width: 18rem;">
+             <ul>
+                <li> ${topic.name} </li>
+                <li>  <a href="addTopic?edit=${topic.id}">редактировать</a> </li>
+                <li>  <a href="deleteTopic?id=${topic.id}">удалить</a> </li>
+                <li>  <a href="allNews?id_topic=${topic.id}">Посмотреть новости  данного топика</a> </li>
+                <li>  <a href="addNews?id_topic=${topic.id}">Добавить новость к данному топику</a> </li>
+             </ul>
+            </div>
         </c:forEach>
     </ol>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+    </div>
 </body>
 </html>
+
+

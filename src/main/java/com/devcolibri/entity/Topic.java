@@ -14,7 +14,7 @@ public class Topic {
     private long id;
 
     @NotNull
-    @Size(min = 2, max = 100)
+    @Size(min = 3)
     @Column(name = "name")
     private String name;
 

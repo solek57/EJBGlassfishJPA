@@ -7,7 +7,7 @@
 
     <form action="addNews" method="post">
         <label for="name">Введите новость:
-            <input type="text" id="name" value="${news.message}" name="message" />
+            <input type="text" id="name" value="${news.message}" name="message" style="width: 500px; height: 40px;" minlength="3" required/>
         </label>  <br />
         <input type="hidden" name="id" value="${news.id}" />
         <input type="submit" value="Сохранить" />

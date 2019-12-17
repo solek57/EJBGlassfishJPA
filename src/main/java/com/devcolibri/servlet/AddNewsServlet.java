@@ -1,8 +1,9 @@
 package com.devcolibri.servlet;
 
+import com.devcolibri.bean.NewsBean;
 import com.devcolibri.bean.TopicBean;
+import com.devcolibri.entity.News;
 import com.devcolibri.entity.Topic;
-
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,26 +13,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/addTopic")
-public class AddAndEditTopicServlet extends HttpServlet {
+@WebServlet("/addNews")
+public class AddNewsServlet extends HttpServlet {
 
+    @EJB
+    private NewsBean newsBean;
     @EJB
     private TopicBean topicBean;
 
+    Topic topic;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         req.setCharacterEncoding("UTF-8");
+        topic = topicBean.get(Long.valueOf(req.getParameter("id_topic")));
 
         if(req.getParameter("edit") != null){
-            long id = Long.valueOf(req.getParameter("edit"));
-            Topic topic = topicBean.get(id);
-
-            req.setAttribute("topic", topic);
+           long id_edit = Long.valueOf(req.getParameter("edit"));
+            News news = newsBean.get(id_edit);
+            req.setAttribute("news", news);
         }
-
-        req.getRequestDispatcher("/addTopic.jsp").forward(req, resp);
+        req.getRequestDispatcher("/addNews.jsp").forward(req, resp);
     }
 
     @Override
@@ -39,14 +42,17 @@ public class AddAndEditTopicServlet extends HttpServlet {
         resp.setContentType("text/html");
         req.setCharacterEncoding("UTF-8");
 
-        String name = req.getParameter("name");
+        String message = req.getParameter("message");
         if(!"".equals(req.getParameter("id"))){
             long id = Long.valueOf(req.getParameter("id"));
-            Topic topic = topicBean.get(id);
-            topic.setName(name);
-            topicBean.update(topic);
+
+            News news = newsBean.get(id);
+            news.setMessage(message);
+            newsBean.update(news);
         } else{
-            topicBean.add(new Topic(name));
+            News news = new News(message);
+            news.setTopic(topic);
+            newsBean.add(news);
         }
         resp.sendRedirect("allTopic");
     }
